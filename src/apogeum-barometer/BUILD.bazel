@@ -1,0 +1,14 @@
+filegroup(
+    name = "data_files",
+    srcs = ["data.csv"],
+)
+
+cc_binary(
+    name = "apogeum-barometer",
+    srcs = ["barometer.cpp"],
+    data = [":data_files"],
+    deps = [
+        "//src/csvReader",
+        "@bazel_tools//tools/cpp/runfiles",
+    ],
+)
