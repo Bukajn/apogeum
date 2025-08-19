@@ -1,4 +1,5 @@
 cc_binary(
-    name = "filtrkalmana",
-    srcs = ["filtrkalmana.cpp"]
+    name = "main",
+    srcs = ["KalmanFilter.cpp", "KalmanFilter.h", "main.cpp", "KalmanFilterR7.h","KalmanFilterR7.cpp",],
+    deps = ["@eigen", "//src/csvReader"],
 )

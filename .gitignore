@@ -3,4 +3,6 @@ bazel-bin
 bazel-out
 bazel-apogeum
 bazel-testlogs
-.vscode
+.vscode/*
+!.vscode/launch.json
+!.vscode/tasks.json
