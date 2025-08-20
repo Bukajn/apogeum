@@ -1,0 +1,12 @@
+cc_binary(
+    name = "module",
+    srcs = ["graphTest.cpp"],
+    linkshared  = True,  # generuje shared library (.so)
+)
+
+py_binary(
+    name = "graphTest",
+    srcs = ["graphTest.py"],
+    data = [":module"]
+)
+
