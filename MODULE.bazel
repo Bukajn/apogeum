@@ -5,3 +5,23 @@
 # For more details, please check https://github.com/bazelbuild/bazel/issues/18958
 ###############################################################################
 bazel_dep(name = "eigen", version = "4.0.0-20241125.bcr.2")
+
+bazel_dep(name = "rules_python", version = "1.0.0")
+python = use_extension("@rules_python//python/extensions:python.bzl", "python")
+
+python.toolchain(
+    ignore_root_user_error = True,
+    is_default = True,
+    python_version = "3.11",
+)
+
+pip = use_extension("@rules_python//python/extensions:pip.bzl", "pip")
+
+pip.parse(
+    hub_name = "apogeum_pip",
+    python_version = "3.11",
+    requirements_lock = "//:requirements.txt",
+)
+
+
+use_repo(pip, "apogeum_pip")

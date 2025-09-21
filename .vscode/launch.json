@@ -16,6 +16,15 @@
             "externalConsole": false,
             "MIMode": "gdb",
             "preLaunchTask": "bazel build debug main"
+        },
+        {
+            "name" : "Launch graphTest",
+            "type" : "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/bazel-bin/src/graphTest",
+            "preLaunchTask": "bazel build graphTest",
+            "cwd": "${workspaceFolder}"
+            
         }
 
     ]

@@ -10,6 +10,16 @@
                 "--compilation_mode=dbg",
                 "//src:main"
             ],
+        },
+        {
+            "label": "bazel build graphTest",
+            "type": "shell",
+            "command": "bazel",
+            "args": [
+                "build",
+                "--compilation_mode=dbg",
+                "//src:graphTest"
+            ],
         }
     ]
 }

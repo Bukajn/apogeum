@@ -12,10 +12,10 @@ int main() {
 
     KalmanFilterR7 f(0.01);
     for(int i =0; i < accelerometerCsv.rowCount(); i++) {
-        auto barometrRow = barometrCsv[i/2];
-        auto accelerometerRow = accelerometerCsv[i];
-        auto r = f.processMeasurement(accelerometerRow.get<1>(), barometrRow.get<1>());
-        file << accelerometerRow.get<0>() << ", " << r(0) << ", " << r(1) << "\n";
+        auto barometrRow = barometrCsv[i/2]; 
+        auto accelerometerRow = accelerometerCsv[i]; 
+        auto r = f.processMeasurement(accelerometerRow.get<1>(), barometrRow.get<1>()); 
+        file << accelerometerRow.get<0>() << ", " << r(0) << ", " << r(1) << "\n"; 
     }
 
    
