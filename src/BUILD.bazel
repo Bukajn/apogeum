@@ -2,10 +2,13 @@ cc_binary(
     name = "main",
     srcs = ["KalmanFilter.cpp", "KalmanFilter.h", "main.cpp", "KalmanFilterR7.h","KalmanFilterR7.cpp",],
     deps = ["@eigen", "//src/csvReader"],
+    data = [
+        "//data:data_files",
+    ],
 )
 
 cc_binary(
-    name = "module",
+    name = "libmodule.so",
     srcs = ["graphTest.cpp", "KalmanFilter.cpp", "KalmanFilter.h", "KalmanFilterR7.h", "KalmanFilterR7.cpp"],
     deps = ["@eigen", "//src/csvReader"],
     linkshared  = True,  # generuje shared library (.so)
@@ -14,7 +17,7 @@ cc_binary(
 py_binary(
     name = "graphTest",
     srcs = ["graphTest.py"],
-    data = [":module"],
+    data = [":libmodule.so"],
     deps = [
         "@apogeum_pip//numpy",
         "@apogeum_pip//matplotlib",
