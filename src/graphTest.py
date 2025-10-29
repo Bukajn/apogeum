@@ -6,6 +6,8 @@ import matplotlib.pyplot as plt
 import tkinter as tk
 from tkinter import filedialog
 
+output_dir = None
+
 def select_files_simple():
     """Wybiera pliki jeden po drugim"""
     root = tk.Tk()
@@ -13,14 +15,18 @@ def select_files_simple():
     
     files = {}
 
-    initial_dir = filedialog.askdirectory(title="Wybierz folder z danymi", initialdir="data/")
-    if not initial_dir:
-        exit()
+    global output_dir
+    output_dir = filedialog.askdirectory(
+    title="Wybierz folder ZAPISU wyników",
+    initialdir=os.path.expanduser("~")
+    )
+    if not output_dir:
+        output_dir = os.getcwd()
 
 
     files['barometer'] = filedialog.askopenfilename(
         title="1/3: Wybierz plik BAROMETRU",
-        initialdir=initial_dir,
+        initialdir=output_dir,
         filetypes=[("CSV files", "*.csv")]
     )
     if not files["barometer"]:
@@ -28,7 +34,7 @@ def select_files_simple():
     
     files['accelerometer'] = filedialog.askopenfilename(
         title="2/3: Wybierz plik AKCELEROMETRU", 
-        initialdir=initial_dir,
+        initialdir=output_dir,
         filetypes=[("CSV files", "*.csv")]
     )
     if not files["accelerometer"]:
@@ -36,7 +42,7 @@ def select_files_simple():
 
     files['pos'] = filedialog.askopenfilename(
         title="3/3: Wybierz plik z pozycją",
-        initialdir=initial_dir, 
+        initialdir=output_dir, 
         filetypes=[("CSV files", "*.csv")]
     )
     if not files["pos"]:
@@ -134,17 +140,19 @@ base_dir = os.path.dirname(__file__)
 # ścieżka do pliku z data
 lib_path = os.path.join(base_dir, "libmodule.so") 
 lib = ctypes.CDLL(lib_path)
-lib.filter.argtypes = [ctypes.c_char_p]
+lib.filter.argtypes = [
+    ctypes.c_char_p,  # output_file
+    ctypes.c_char_p,  # barometer_file
+    ctypes.c_char_p   # accelerometer_file
+]
 _dirname = os.getcwd()
 
-output_file =  "test.txt"
+output_file = os.path.join(output_dir, "test.txt")
 # Wywołanie funkcji
 result = lib.filter(
     output_file.encode("utf-8"), 
     files["barometer"].encode("utf-8"), 
-    files["accelerometer"].encode("utf-8"))
- 
-
+    files["accelerometer"].encode("utf-8")) 
 
 #pobieranie danych z plików
 acceleration = pd.read_csv(os.path.join(_dirname,  files["accelerometer"]))[["t","az"]]
@@ -241,4 +249,5 @@ fig.text(0.02, 0.02, info_text, fontsize=8, verticalalignment='bottom',
 
 
 plt.tight_layout(rect=[0, 0.15, 1, 1])
-plt.savefig('result.png', dpi=600, bbox_inches='tight')
+plt.savefig(os.path.join(output_dir, "result.png"), dpi=600, bbox_inches='tight')
+plt.show()
