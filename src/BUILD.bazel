@@ -8,6 +8,15 @@ cc_binary(
 )
 
 cc_binary(
+    name = "csv_apogee_test",
+    srcs = ["apogee.cpp", "ApogeeDetector.h", "KalmanFilterR7.h", "KalmanFilter.h", "KalmanFilter.cpp", "KalmanFilterR7.cpp"],
+    deps = ["@eigen", "//src/csvReader"],
+    data = [
+        "//data:data_files",
+    ],
+)
+ 
+cc_binary(
     name = "libmodule.so",
     srcs = ["graphTest.cpp", "KalmanFilter.cpp", "KalmanFilter.h", "KalmanFilterR7.h", "KalmanFilterR7.cpp"],
     deps = ["@eigen", "//src/csvReader"],
