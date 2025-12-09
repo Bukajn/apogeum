@@ -1,6 +1,6 @@
 cc_binary(
     name = "main",
-    srcs = ["KalmanFilter.cpp", "KalmanFilter.h", "main.cpp", "KalmanFilterR7.h","KalmanFilterR7.cpp",],
+    srcs = ["KalmanFilter.cpp", "KalmanFilter.h", "main.cpp", "KalmanFilterR7.h","KalmanFilterR7.cpp","Matrix.h","Matrix.cpp"],
     deps = ["@eigen", "//src/csvReader"],
     data = [
         "//data:data_files",
