@@ -10,8 +10,17 @@ private:
     std::unique_ptr<std::unique_ptr<float[]>[]> array;
 public:
     Matrix(std::initializer_list<std::initializer_list<float>> list);
+    Matrix(size_t rows, size_t columns);
+
+    static Matrix Identity(size_t size);
+
+    float& operator ()(size_t r, size_t c);
     const float& operator ()(size_t r, size_t c) const;
-    size_t getRows();
-    size_t getColumns();
-    std::string toString();
+    Matrix operator +(const Matrix& other) const;
+    Matrix operator *(const Matrix& other) const;
+    Matrix transpose() const;
+    Matrix inverse() const;
+    size_t getRows() const;
+    size_t getColumns() const;
+    std::string toString() const;
 };
