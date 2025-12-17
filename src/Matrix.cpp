@@ -125,6 +125,7 @@ Matrix &Matrix::operator=(Matrix &&other)
     rows = other.getRows();
     columns = other.getColumns();
     array = std::move(other.array);
+    return *this;
 }
 
 Matrix Matrix::transpose() const

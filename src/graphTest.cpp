@@ -1,6 +1,5 @@
 #include <iostream>
 #include "CsvReader.h"
-#include <Eigen/Dense>
 #include "KalmanFilterR7.h"
 #include <fstream>
 
@@ -19,7 +18,7 @@ extern "C" void filter(const char* output, const char* barometr, const char* acc
 
         //Plik akcelometru musi być w formacie t,ax,ay,az
         auto r = f.processMeasurement(accelerometerRow.get<3>(), barometrRow.get<1>()); 
-        file << accelerometerRow.get<0>() << ", " << r(0) << ", " << r(1) << "\n"; 
+        file << accelerometerRow.get<0>() << ", " << r(0,0) << ", " << r(1,0) << "\n"; 
     }
 
    

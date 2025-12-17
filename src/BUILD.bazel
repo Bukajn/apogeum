@@ -1,7 +1,7 @@
 cc_binary(
     name = "main",
-    srcs = ["KalmanFilter.cpp", "KalmanFilter.h", "main.cpp", "KalmanFilterR7.h","KalmanFilterR7.cpp","Matrix.h","Matrix.cpp"],
-    deps = ["@eigen", "//src/csvReader"],
+    srcs = ["main.cpp", "Matrix.h","Matrix.cpp","KalmanFilter.cpp", "KalmanFilter.h",  "KalmanFilterR7.h","KalmanFilterR7.cpp"],
+    deps = [ "//src/csvReader"],
     data = [
         "//data:data_files",
     ],
@@ -10,7 +10,7 @@ cc_binary(
 cc_binary(
     name = "csv_apogee_test",
     srcs = ["apogee.cpp", "ApogeeDetector.h", "KalmanFilterR7.h", "KalmanFilter.h", "KalmanFilter.cpp", "KalmanFilterR7.cpp"],
-    deps = ["@eigen", "//src/csvReader"],
+    deps = [ "//src/csvReader"],
     data = [
         "//data:data_files",
     ],
@@ -18,8 +18,8 @@ cc_binary(
  
 cc_binary(
     name = "libmodule.so",
-    srcs = ["graphTest.cpp", "KalmanFilter.cpp", "KalmanFilter.h", "KalmanFilterR7.h", "KalmanFilterR7.cpp"],
-    deps = ["@eigen", "//src/csvReader"],
+    srcs = ["graphTest.cpp", "KalmanFilter.cpp", "KalmanFilter.h", "KalmanFilterR7.h", "KalmanFilterR7.cpp", "Matrix.h","Matrix.cpp"],
+    deps = [ "//src/csvReader"],
     linkshared  = True,  # generuje shared library (.so)
 )
 
