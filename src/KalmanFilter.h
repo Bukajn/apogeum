@@ -1,19 +1,18 @@
-#include <Eigen/Dense>
+#include "Matrix.h"
 
 class KalmanFilter {
 public:
-    using Matrix = Eigen::MatrixXd;
-    using Vector = Eigen::VectorXd;
+
 
     KalmanFilter(const Matrix& F, const Matrix& B, const Matrix& H,
                  const Matrix& Q, const Matrix& R, const Matrix& P,
-                 const Vector& x);
+                 const Matrix& x);
 
 
-    void predict(const Vector& u);
+    void predict(const Matrix& u);
 
-    void update(const Vector& z);
-    Vector getState() const;
+    void update(const Matrix& z);
+    Matrix getState() const;
 
 protected:
     Matrix F;  // macierz przejścia stanu
@@ -22,5 +21,5 @@ protected:
     Matrix Q;  // szum procesu
     Matrix R;  // szum pomiaru
     Matrix P;  // kowariancja stanu
-    Vector x;  // wektor stanu
+    Matrix x;  // wektor stanu
 };
