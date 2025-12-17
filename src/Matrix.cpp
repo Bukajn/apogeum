@@ -34,11 +34,22 @@ Matrix::Matrix(size_t rows, size_t columns)
     for (size_t r = 0; r < rows; ++r) {
         array[r] = std::make_unique<float[]>(columns);
         for(size_t c = 0; c < columns; ++c){
-            array[r][c] = 0;
+            (*this)(r,c) = 0;
         }
     }
     this->rows = rows;
     this->columns = columns;
+}
+
+Matrix::Matrix(const Matrix &other) : rows(other.getRows()), columns(other.getColumns())
+{
+    array = std::make_unique<std::unique_ptr<float[]>[]>(rows);
+    for (size_t r = 0; r < rows; ++r) {
+        array[r] = std::make_unique<float[]>(columns);
+        for(size_t c = 0; c < columns; ++c){
+            (*this)(r,c) = other(r,c);
+        }
+    }
 }
 
 Matrix Matrix::Identity(size_t size)
@@ -83,7 +94,7 @@ Matrix Matrix::operator*(const Matrix &other) const
 
     for (size_t r = 0; r < rows; ++r) {
         for (size_t c = 0; c < other.columns; ++c) {
-            int sum = 0;
+            float sum = 0;
             for (size_t k = 0; k < columns; ++k) {
                 sum += (*this)(r, k) * other(k, c);
             }
@@ -92,6 +103,28 @@ Matrix Matrix::operator*(const Matrix &other) const
     }
 
     return result;
+}
+
+Matrix Matrix::operator-(const Matrix &other) const
+{
+     if(rows != other.rows || columns != other.columns) 
+        throw std::invalid_argument("Cannot substract matrices: both matrices must have the same dimensions.");
+    Matrix result(rows, columns);
+
+    for(size_t r = 0; r < rows; ++r){
+        for(size_t c = 0; c < columns; ++c){
+            result(r,c) = (*this)(r,c) - other(r,c);
+        }
+    }
+
+    return result;
+}
+
+Matrix &Matrix::operator=(Matrix &&other)
+{
+    rows = other.getRows();
+    columns = other.getColumns();
+    array = std::move(other.array);
 }
 
 Matrix Matrix::transpose() const
@@ -107,13 +140,14 @@ Matrix Matrix::transpose() const
     return result;
 }
 
-Matrix Matrix::inverse() const
+Matrix Matrix::inverse1x1() const
 {
-    if(rows != columns)
-        throw std::invalid_argument("Cannot create inverse: matrix must be square.");
-    Matrix result(rows, columns);
+    Matrix result(1, 1);
+    result(0,0) = 1 / (*this)(0,0);
     return result;
 }
+
+
 
 size_t Matrix::getRows() const
 {

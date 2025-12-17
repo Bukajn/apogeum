@@ -11,6 +11,7 @@ private:
 public:
     Matrix(std::initializer_list<std::initializer_list<float>> list);
     Matrix(size_t rows, size_t columns);
+    Matrix(const Matrix& other);
 
     static Matrix Identity(size_t size);
 
@@ -18,8 +19,10 @@ public:
     const float& operator ()(size_t r, size_t c) const;
     Matrix operator +(const Matrix& other) const;
     Matrix operator *(const Matrix& other) const;
+    Matrix operator -(const Matrix& other) const;
+    Matrix& operator=(Matrix&&);
     Matrix transpose() const;
-    Matrix inverse() const;
+    Matrix inverse1x1() const;
     size_t getRows() const;
     size_t getColumns() const;
     std::string toString() const;
